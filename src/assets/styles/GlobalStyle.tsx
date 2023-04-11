@@ -36,6 +36,7 @@ body {
 	line-height: 1;
   font-family: 'Roboto', sans-serif;
   background-color: #202020;
+	min-width: 860px;
 	display: flex;
 	justify-content: center;
 }

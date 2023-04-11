@@ -1,19 +1,16 @@
 import HeaderMenu from "../../components/headerMenu/HeaderMenu";
-import styled from "styled-components";
+import Content from "../../components/ImagesContainer/ImagesContainer";
 
 function FrontPage(): JSX.Element {
+  
   return(
     <>
       <HeaderMenu/>
-      <Content>
-        <h1>DooM</h1>
-      </Content>      
+      <Content/>      
     </>
   );
 };
 
-const Content = styled.main`
-width: 70vw;
-`
+
 
 export default FrontPage;
