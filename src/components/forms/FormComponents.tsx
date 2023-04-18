@@ -4,7 +4,8 @@ import { StyledComponent } from "styled-components";
 export const Board: StyledComponent<"div", any, {}, never> = styled.div`
 margin-top: -30px;
 margin-bottom: 30px;
-min-height: 370px;
+min-height: 680px;
+min-width: 400px;
 width: 60vw;
 height: 80vh;
 background-color: #0c0c0c;
@@ -26,16 +27,51 @@ flex-direction: column;
   }
   input{
     margin-top: 8px;
-    width: 55vw;
-    max-width:400px;
+    width: 300px;    
+    height: 25px;
+    border-radius: 5px;
+    font-size: 18px;
+    ::placeholder {
+      text-align: center;
+    }
   }
-  button{
-    margin-top: 12px;
-    width: 55vw;
+  label{
+    margin-top: 8px;
+    height: 25px;
+    width: 302px;
     max-width:400px;
+    font-weight: 700;
+    font-size: 25px;
+    text-align: center;
+    background-color: #fdfdfd;
+    border-radius: 5px;
     :hover{
       cursor: pointer;
     }
+  }
+  button{
+    margin-top: 12px;
+    width: 300px;
+    max-width:400px;
+    height: 45px;
+    font-weight: 700;
+    font-size: 30px;
+    background-color: #fdfdfd;
+    border-radius: 15px;
+    :hover{
+      cursor: pointer;
+    }
+  }
+  p{
+    margin-top: 6px;
+    color: #fdfdfd;
+  }
+  img{
+    margin-top: 6px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    object-fit: cover;
   }
  }
 `

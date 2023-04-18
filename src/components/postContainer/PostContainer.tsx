@@ -1,5 +1,3 @@
-import styled from "styled-components";
-import HeaderMenu from "../headerMenu/HeaderMenu";
 import { useParams } from "react-router-dom";
 import { Portrait } from "../headerMenu/HeaderStyledComponents";
 import { ImageContainer,
@@ -13,7 +11,6 @@ function PostContainer(): JSX.Element {
 
   return (
     <>
-      <HeaderMenu />
       <ImageContainer >
         <img src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Pyke_0.jpg" alt="" />
       </ImageContainer >

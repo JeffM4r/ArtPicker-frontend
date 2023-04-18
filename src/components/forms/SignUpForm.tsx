@@ -3,7 +3,7 @@ import logo from "../../assets/Images/LoginScreenLogo.png";
 import { Board,Logo } from './FormComponents';
 
 function SignupForm(): JSX.Element {
-  const [image, setImage] = useState<string | ArrayBuffer>("");
+  const [image, setImage] = useState<string>("");
   const [form, setForm] = useState<{}>({});
 
   console.log(image)
@@ -22,7 +22,7 @@ function SignupForm(): JSX.Element {
       reader.readAsDataURL(file)
       reader.onloadend = () => {
         if(reader.result){
-          setImage(reader.result);
+          setImage(String(reader.result));
         }
       }
     } else {
@@ -43,7 +43,11 @@ function SignupForm(): JSX.Element {
         <input type="email" name='email' placeholder='Digite seu email' required/>
         <input type="password" name='password' placeholder='Digite sua senha' required/>
         <input type="password" name='password confirm' placeholder='Digite sua senha novamente' required/>
-        <input type="file" name='image' onChange={handleImageChange} required/>
+        {image? <img src={image} alt="preview profile picture" />:<p>Preview da imagem aparecerá aqui</p>}
+        <label>
+            <input style={{display:"none"}} type="file" name='image' onChange={handleImageChange} required/>
+            Escolha sua imagem
+          </label>
         <button name='sendFormButton' >Criar conta</button>
       </form>
     </Board>

@@ -1,12 +1,9 @@
 import { ChangeEvent, useState } from 'react';
 import { PostBoard, Preview } from './FormComponents';
-import HeaderMenu from '../headerMenu/HeaderMenu';
 
 function PostForm(): JSX.Element {
   const [image, setImage] = useState<string>("");
   const [form, setForm] = useState<{}>({});
-
-  console.log(image)
 
   function handleImageChange(event: ChangeEvent<HTMLInputElement>) { 
     const image: FileList | null = event.target.files;
@@ -36,7 +33,6 @@ function PostForm(): JSX.Element {
 
   return (
     <>
-      <HeaderMenu/>
       <PostBoard>
         <Preview>
           {image? <img src={image} alt="" />:<p>Preview da imagem aparecerá aqui</p>}
