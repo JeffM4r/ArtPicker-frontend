@@ -5,6 +5,7 @@ import { Board,Logo } from './FormComponents';
 function SignupForm(): JSX.Element {
   const [image, setImage] = useState<string>("");
   const [form, setForm] = useState<{}>({});
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   console.log(image)
 
@@ -32,6 +33,8 @@ function SignupForm(): JSX.Element {
 
   function handleUploadClick(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if(isLoading){return};
+    setIsLoading(true);
   };
 
   return (
@@ -39,10 +42,10 @@ function SignupForm(): JSX.Element {
       <Logo src={logo} alt="logo" />
       <form onSubmit={handleUploadClick}>
         <h1>Criar Conta</h1>
-        <input type="text" name='name' placeholder='Digite seu nick' required/>
-        <input type="email" name='email' placeholder='Digite seu email' required/>
-        <input type="password" name='password' placeholder='Digite sua senha' required/>
-        <input type="password" name='password confirm' placeholder='Digite sua senha novamente' required/>
+        <input type="text" name='name' placeholder='Digite seu nick' onChange={(e) => setForm({...form, email: e.target.value})} required/>
+        <input type="email" name='email' placeholder='Digite seu email' onChange={(e) => setForm({...form, email: e.target.value})} required/>
+        <input type="password" name='password' placeholder='Digite sua senha' onChange={(e) => setForm({...form, email: e.target.value})} required/>
+        <input type="password" name='password confirm' placeholder='Digite sua senha novamente' onChange={(e) => setForm({...form, email: e.target.value})} required/>
         {image? <img src={image} alt="preview profile picture" />:<p>Preview da imagem aparecerá aqui</p>}
         <label>
             <input style={{display:"none"}} type="file" name='image' onChange={handleImageChange} required/>

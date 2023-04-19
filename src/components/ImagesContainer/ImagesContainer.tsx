@@ -8,7 +8,7 @@ function Content(): JSX.Element {
   const { data, isLoading, error } = useQuery("artsUploaded", getImages, {refetchOnReconnect: false,
                                                                           retry: false,
                                                                           staleTime: OneDayInMS})
-
+  console.log(data)
   if (error) {
     return (
       <>
@@ -22,10 +22,10 @@ function Content(): JSX.Element {
     return (
       <>
         <Container>
-          {data.map((imgs: any, index: number)=>{
+          {data.map((imgs: any)=>{
             return(
-              <div>
-                <ImageContainer src={imgs.urls.raw} key={index}/>
+              <div key={imgs.id}>
+                <ImageContainer src={imgs.pictureLink}/>
               </div>              
             )
           })}
