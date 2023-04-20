@@ -15,7 +15,10 @@ export async function getImages(): Promise<any> {
 export async function createAccount(userData: any): Promise<any> {
   const result = await fetch(`${BaseURL}/auth/signup`, {
     method: "POST",
-    body: userData
+    headers: new Headers({
+      "Content-Type": "application/json"
+    }),
+    body: JSON.stringify(userData)
   });
 
   if (result.status > 399) {

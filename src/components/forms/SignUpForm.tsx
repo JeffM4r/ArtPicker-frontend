@@ -1,40 +1,49 @@
 import { ChangeEvent, useState } from 'react';
 import logo from "../../assets/Images/LoginScreenLogo.png";
-import { Board,Logo } from './FormComponents';
+import { Board, Logo } from './FormComponents';
+import { useMutation } from 'react-query';
+import { createAccount } from '../../services/ArtsApiContext';
+import { SignupFormType } from '../types/types';
 
 function SignupForm(): JSX.Element {
-  const [image, setImage] = useState<string>("");
-  const [form, setForm] = useState<{}>({});
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [form, setForm] = useState<SignupFormType>({ userName: "", email: "", password: "", password2: "", image: "" });
+  const { mutate, isLoading, isSuccess, isError } = useMutation(createAccount, {
+    onSuccess: () => { console.log("foi") },
+    onError: () => { console.log("naofoi") }
+  })
 
-  console.log(image)
-
-  function handleImageChange(event: ChangeEvent<HTMLInputElement>) { 
+  function handleImageChange(event: ChangeEvent<HTMLInputElement>) {
     const image: FileList | null = event.target.files;
-    if(image){
+    if (image) {
       transformFile(image[0])
-    }  
+    }
   };
 
-  function transformFile(file:File | null){
+  function transformFile(file: File | null) {
     const reader = new FileReader()
 
-    if (file){
+    if (file) {
       reader.readAsDataURL(file)
       reader.onloadend = () => {
-        if(reader.result){
-          setImage(String(reader.result));
+        if (reader.result) {
+          setForm({ ...form, image: String(reader.result) });
         }
       }
     } else {
-      setImage("")
+      setForm({ ...form, image: "" })
     }
   }
 
   function handleUploadClick(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if(isLoading){return};
-    setIsLoading(true);
+    if (form.password !== form.password2) {alert("passwords digitados estão diferentes"); return }
+    if (isLoading) { return };
+    mutate({
+      userName: form.userName,
+      email: form.email,
+      password: form.password,
+      image: form.image
+    });
   };
 
   return (
@@ -42,15 +51,15 @@ function SignupForm(): JSX.Element {
       <Logo src={logo} alt="logo" />
       <form onSubmit={handleUploadClick}>
         <h1>Criar Conta</h1>
-        <input type="text" name='name' placeholder='Digite seu nick' onChange={(e) => setForm({...form, email: e.target.value})} required/>
-        <input type="email" name='email' placeholder='Digite seu email' onChange={(e) => setForm({...form, email: e.target.value})} required/>
-        <input type="password" name='password' placeholder='Digite sua senha' onChange={(e) => setForm({...form, email: e.target.value})} required/>
-        <input type="password" name='password confirm' placeholder='Digite sua senha novamente' onChange={(e) => setForm({...form, email: e.target.value})} required/>
-        {image? <img src={image} alt="preview profile picture" />:<p>Preview da imagem aparecerá aqui</p>}
+        <input type="text" name='name' placeholder='Digite seu nick' onChange={(e) => setForm({ ...form, userName: e.target.value })} value={form.userName} required />
+        <input type="email" name='email' placeholder='Digite seu email' onChange={(e) => setForm({ ...form, email: e.target.value })} value={form.email} required />
+        <input type="password" name='password' placeholder='Digite sua senha' onChange={(e) => setForm({ ...form, password: e.target.value })} value={form.password} required />
+        <input type="password" name='password confirm' placeholder='Digite sua senha novamente' onChange={(e) => setForm({ ...form, password2: e.target.value })} value={form.password2} required />
+        {form.image ? <img src={form.image} alt="preview profile picture" /> : <p>Preview da imagem aparecerá aqui</p>}
         <label>
-            <input style={{display:"none"}} type="file" name='image' onChange={handleImageChange} required/>
-            Escolha sua imagem
-          </label>
+          <input style={{ display: "none" }} type="file" name='image' onChange={handleImageChange} required />
+          Escolha sua imagem
+        </label>
         <button name='sendFormButton' >Criar conta</button>
       </form>
     </Board>
