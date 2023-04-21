@@ -28,12 +28,13 @@ export async function createAccount(userData: any): Promise<any> {
   return result.json();
 }
 
-export async function oldGetImages(): Promise<any> {
-  const result = await fetch(`${BaseURL}/photos`, {
-    method: "GET",
+export async function signin(userData: any): Promise<any> {
+  const result = await fetch(`${BaseURL}/auth/signin`, {
+    method: "POST",
     headers: new Headers({
-      'Authorization': `Bearer ADASDASDasd`
-    })
+      "Content-Type": "application/json"
+    }),
+    body: JSON.stringify(userData)
   });
 
   if (result.status > 399) {
@@ -43,9 +44,12 @@ export async function oldGetImages(): Promise<any> {
   return result.json();
 }
 
-export async function getPeople(): Promise<any> {
-  const result = await fetch("https://swapi.dev/api/people/1", {
-    method: "GET"
+export async function oldGetImages(): Promise<any> {
+  const result = await fetch(`${BaseURL}/photos`, {
+    method: "GET",
+    headers: new Headers({
+      'Authorization': `Bearer ADASDASDasd`
+    })
   });
 
   if (result.status > 399) {

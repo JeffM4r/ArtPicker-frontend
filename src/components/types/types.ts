@@ -12,3 +12,8 @@ export interface SignupFormType {
   password2: string,
   image: string
 }
+
+export interface SigninFormType {
+  email: string,
+  password: string
+}

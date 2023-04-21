@@ -7,9 +7,9 @@ import { SignupFormType } from '../types/types';
 
 function SignupForm(): JSX.Element {
   const [form, setForm] = useState<SignupFormType>({ userName: "", email: "", password: "", password2: "", image: "" });
-  const { mutate, isLoading, isSuccess, isError } = useMutation(createAccount, {
-    onSuccess: () => { console.log("foi") },
-    onError: () => { console.log("naofoi") }
+  const { mutate, isLoading } = useMutation(createAccount, {
+    onSuccess: () => { alert("Conta criada com sucesso! vá para página de login"); },
+    onError: () => { alert("Houve um erro nessa tentativa de cadastro, email ou nome de usuário pode estar em uso"); }
   })
 
   function handleImageChange(event: ChangeEvent<HTMLInputElement>) {
@@ -36,7 +36,7 @@ function SignupForm(): JSX.Element {
 
   function handleUploadClick(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (form.password !== form.password2) {alert("passwords digitados estão diferentes"); return }
+    if (form.password !== form.password2) { alert("passwords digitados estão diferentes"); return };
     if (isLoading) { return };
     mutate({
       userName: form.userName,
