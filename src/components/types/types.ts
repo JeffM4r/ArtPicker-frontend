@@ -17,3 +17,9 @@ export interface SigninFormType {
   email: string,
   password: string
 }
+
+export interface PostFormType {
+  title: string,
+  subtitle: string,
+  image: string
+}

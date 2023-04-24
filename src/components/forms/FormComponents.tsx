@@ -74,6 +74,10 @@ flex-direction: column;
     object-fit: cover;
   }
  }
+ a{
+  margin-top: 8px;
+  color: white;
+ }
 `
 export const PostBoard: StyledComponent<"div", any, {}, never> = styled.div`
 margin-top: 10px;

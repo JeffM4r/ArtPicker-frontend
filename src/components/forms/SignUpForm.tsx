@@ -4,6 +4,8 @@ import { Board, Logo } from './FormComponents';
 import { useMutation } from 'react-query';
 import { createAccount } from '../../services/ArtsApiContext';
 import { SignupFormType } from '../types/types';
+import { Link } from 'react-router-dom';
+import { Loading } from '../ImagesContainer/FrontPageStyledComponents';
 
 function SignupForm(): JSX.Element {
   const [form, setForm] = useState<SignupFormType>({ userName: "", email: "", password: "", password2: "", image: "" });
@@ -46,6 +48,15 @@ function SignupForm(): JSX.Element {
     });
   };
 
+  if (isLoading) {
+    return (
+      <Board>
+        <Logo src={logo} alt="logo" />
+        <Loading />
+      </Board>
+    )
+  };
+
   return (
     <Board>
       <Logo src={logo} alt="logo" />
@@ -62,6 +73,7 @@ function SignupForm(): JSX.Element {
         </label>
         <button name='sendFormButton' >Criar conta</button>
       </form>
+      <Link to="/signin">Já tem uma conta? Entre agora!</Link>
     </Board>
   );
 }

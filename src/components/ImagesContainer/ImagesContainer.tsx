@@ -8,7 +8,7 @@ function Content(): JSX.Element {
   const { data, isLoading, error } = useQuery("artsUploaded", getImages, {refetchOnReconnect: false,
                                                                           retry: false,
                                                                           staleTime: OneDayInMS})
-  console.log(data)
+                                                                          
   if (error) {
     return (
       <>
