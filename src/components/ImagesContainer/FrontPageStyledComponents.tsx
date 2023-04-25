@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { StyledComponent } from "styled-components"
 
-export const Loading = styled.div`
+export const LoadingAnimation = styled.div`
 margin-top: 15px;
 border: 16px solid #f3f3f3;
 border-top: 16px solid #181717;

@@ -7,7 +7,7 @@ import { signin } from '../../services/ArtsApiContext';
 import { useNavigate, Link } from 'react-router-dom';
 import userContext from '../contexts/UserContext';
 import { UserContextType } from '../types/types';
-import { Loading } from '../ImagesContainer/FrontPageStyledComponents';
+import { LoadingAnimation } from '../ImagesContainer/FrontPageStyledComponents';
 
 function SigninForm(): JSX.Element {
   const { setToken } = useContext(userContext) as UserContextType
@@ -30,7 +30,7 @@ function SigninForm(): JSX.Element {
     return (
       <Board>
         <Logo src={logo} alt="logo" />
-        <Loading />
+        <LoadingAnimation />
       </Board>
     )
   };

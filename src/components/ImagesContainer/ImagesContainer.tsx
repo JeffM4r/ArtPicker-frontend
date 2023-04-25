@@ -1,14 +1,19 @@
-import { Container,
-        ImageContainer } from "./FrontPageStyledComponents";
 import { useQuery } from "react-query";
 import { getImages } from "../../services/ArtsApiContext";
+import { Board } from "../forms/FormComponents";
+import {Container,
+        ImageContainer,
+        LoadingAnimation} from "./FrontPageStyledComponents";
+
 
 function Content(): JSX.Element {
   const OneDayInMS = 86400000
-  const { data, isLoading, error } = useQuery("artsUploaded", getImages, {refetchOnReconnect: false,
-                                                                          retry: false,
-                                                                          staleTime: OneDayInMS})
-                                                                          
+  const { data, isLoading, error } = useQuery("artsUploaded", getImages, {
+    refetchOnReconnect: false,
+    retry: false,
+    staleTime: OneDayInMS
+  })
+
   if (error) {
     return (
       <>
@@ -22,11 +27,11 @@ function Content(): JSX.Element {
     return (
       <>
         <Container>
-          {data.map((imgs: any)=>{
-            return(
+          {data.map((imgs: any) => {
+            return (
               <div key={imgs.id}>
-                <ImageContainer src={imgs.pictureLink}/>
-              </div>              
+                <ImageContainer src={imgs.pictureLink} />
+              </div>
             )
           })}
         </Container>
@@ -36,9 +41,9 @@ function Content(): JSX.Element {
   if (isLoading) {
     return (
       <>
-        <Container>
-          Carregando
-        </Container>
+        < Board>
+          <LoadingAnimation/>
+        </ Board>
       </>
     );
   }

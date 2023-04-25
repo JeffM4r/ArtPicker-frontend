@@ -5,7 +5,7 @@ import { useMutation } from 'react-query';
 import { createAccount } from '../../services/ArtsApiContext';
 import { SignupFormType } from '../types/types';
 import { Link } from 'react-router-dom';
-import { Loading } from '../ImagesContainer/FrontPageStyledComponents';
+import { LoadingAnimation } from '../ImagesContainer/FrontPageStyledComponents';
 
 function SignupForm(): JSX.Element {
   const [form, setForm] = useState<SignupFormType>({ userName: "", email: "", password: "", password2: "", image: "" });
@@ -52,7 +52,7 @@ function SignupForm(): JSX.Element {
     return (
       <Board>
         <Logo src={logo} alt="logo" />
-        <Loading />
+        <LoadingAnimation />
       </Board>
     )
   };

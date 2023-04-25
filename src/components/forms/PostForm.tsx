@@ -1,20 +1,22 @@
 import { ChangeEvent, useState, useContext } from 'react';
-import { PostBoard, Preview } from './FormComponents';
+import { PostBoard, Preview, Board } from './FormComponents';
 import { PostFormType } from '../types/types';
-import { sendPost,getAccessToken } from '../../services/ArtsApiContext';
-import { useMutation,useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
-import userContext from '../contexts/UserContext';
-import { UserContextType } from '../types/types';
+import { sendPost, getAccessToken } from '../../services/ArtsApiContext';
+import { useMutation, useQuery } from 'react-query';
+import { useNavigate, Link } from 'react-router-dom';
+import { LoadingAnimation } from '../ImagesContainer/FrontPageStyledComponents';
 
 function PostForm(): JSX.Element {
-  const OneDayInMS = 86400000
+  const OneDayInMS: number = 86400000
   const [form, setForm] = useState<PostFormType>({ title: "", subtitle: "", image: "" });
-  const token = localStorage.getItem('token') as string
-  const { data,error } = useQuery(token, getAccessToken, {refetchOnReconnect: false,
-                                                          retry: false,
-                                                          staleTime: OneDayInMS})
+  const token: string = localStorage.getItem('token') as string
   const navigate = useNavigate();
+  const { data, error } = useQuery(token, getAccessToken, {
+    refetchOnReconnect: false,
+    retry: false,
+    staleTime: OneDayInMS,
+    onError: () => { localStorage.removeItem('token'); location.reload(); }
+  })
   const { mutate, isLoading } = useMutation(sendPost, {
     onSuccess: (data) => { alert("Post Concluído"); navigate("/") },
     onError: () => { alert("Ocorreu um erro, tente novamente"); }
@@ -48,11 +50,19 @@ function PostForm(): JSX.Element {
     mutate({ ...form, token: data });
   };
 
-  if(error){
-    return(
-    <PostBoard>
-      <p>error, faça o login</p>
-    </PostBoard>
+  if (error) {
+    return (
+      <Board>
+        <Link to="/signin">Error, faça o login</Link>
+      </Board>
+    )
+  }
+
+  if (isLoading) {
+    return (
+      <Board>
+        <LoadingAnimation/>
+      </Board>
     )
   }
 
