@@ -1,22 +1,29 @@
 import logo from "../../assets/Images/TopMenuLogo.png";
-import { Top,
-        Menu,
-        Image,
-        SearchBar,
-        LoginButton,
-        Line } from "./HeaderStyledComponents";
+import { Link } from "react-router-dom";
+import {
+  Top,
+  Menu,
+  Image,
+  SearchBar,
+  LoginButton,
+  Line
+} from "./HeaderStyledComponents";
 
 function HeaderMenu(): JSX.Element {
-  return(
+  return (
     <Top>
       <Menu>
-        <Image src={logo} alt="ArtPicker" />
+        <Link to="/" >
+          <Image src={logo} alt="ArtPicker" />
+        </Link>
         <div>
-          <SearchBar placeholder="Pesquisar Post"/>
+          <SearchBar placeholder="Pesquisar Post" />
         </div>
-        <LoginButton>Login</LoginButton>
+        <Link to="/signin" >
+          <LoginButton>Login</LoginButton>
+        </Link>
       </Menu>
-      <Line/>
+      <Line />
     </Top>
   );
 };

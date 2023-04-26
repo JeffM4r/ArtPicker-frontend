@@ -146,6 +146,10 @@ margin-right: 10px;
     }
   }
  }
+ a{
+  margin-top: 8px;
+  color: white;
+ }
 `
 
 export const Preview: StyledComponent<"div", any, {}, never> = styled.div`

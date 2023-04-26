@@ -1,9 +1,12 @@
 import { useQuery } from "react-query";
 import { getImages } from "../../services/ArtsApiContext";
-import { Board } from "../forms/FormComponents";
-import {Container,
-        ImageContainer,
-        LoadingAnimation} from "./FrontPageStyledComponents";
+import { PostBoard } from "../forms/FormComponents";
+import { Link } from "react-router-dom";
+import {
+  Container,
+  ImageContainer,
+  LoadingAnimation
+} from "./FrontPageStyledComponents";
 
 
 function Content(): JSX.Element {
@@ -30,7 +33,9 @@ function Content(): JSX.Element {
           {data.map((imgs: any) => {
             return (
               <div key={imgs.id}>
-                <ImageContainer src={imgs.pictureLink} />
+                <Link to={`/post/${imgs.id}`} >
+                  <ImageContainer src={imgs.pictureLink} />
+                </Link>
               </div>
             )
           })}
@@ -41,16 +46,16 @@ function Content(): JSX.Element {
   if (isLoading) {
     return (
       <>
-        < Board>
-          <LoadingAnimation/>
-        </ Board>
+        < PostBoard>
+          <LoadingAnimation />
+        </ PostBoard>
       </>
     );
   }
   return (
-    <h1>
+    <PostBoard>
       Sem Contato com API
-    </h1>
+    </PostBoard>
   );
 
 };

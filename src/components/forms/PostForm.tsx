@@ -11,14 +11,14 @@ function PostForm(): JSX.Element {
   const [form, setForm] = useState<PostFormType>({ title: "", subtitle: "", image: "" });
   const token: string = localStorage.getItem('token') as string
   const navigate = useNavigate();
-  const { data, error } = useQuery(token, getAccessToken, {
+  const { data, error, isLoading: isLoading2 } = useQuery(token, getAccessToken, {
     refetchOnReconnect: false,
     retry: false,
     staleTime: OneDayInMS,
-    onError: () => { localStorage.removeItem('token'); location.reload(); }
+    onError: () => { localStorage.removeItem('token'); window.location.reload(); }
   })
   const { mutate, isLoading } = useMutation(sendPost, {
-    onSuccess: (data) => { alert("Post Concluído"); navigate("/") },
+    onSuccess: (data) => { alert("Post Concluído"); navigate(`/post/${data.id}`) },
     onError: () => { alert("Ocorreu um erro, tente novamente"); }
   })
 
@@ -52,17 +52,17 @@ function PostForm(): JSX.Element {
 
   if (error) {
     return (
-      <Board>
-        <Link to="/signin">Error, faça o login</Link>
-      </Board>
+      <PostBoard>
+        <Link to="/signin">Erro, faça o login</Link>
+      </PostBoard>
     )
   }
 
-  if (isLoading) {
+  if (isLoading || isLoading2) {
     return (
-      <Board>
+      <PostBoard>
         <LoadingAnimation/>
-      </Board>
+      </PostBoard>
     )
   }
 

@@ -64,7 +64,6 @@ export async function sendPost(userData: any,): Promise<any> {
 }
 
 export async function getAccessToken({queryKey}: any): Promise<any> {
-  console.log(queryKey[0])
   const result = await fetch(`${BaseURL}/auth/token`, {
     method: "POST",
     headers: new Headers({
