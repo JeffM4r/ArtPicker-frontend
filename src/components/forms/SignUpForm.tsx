@@ -66,7 +66,7 @@ function SignupForm(): JSX.Element {
         <input type="email" name='email' placeholder='Digite seu email' onChange={(e) => setForm({ ...form, email: e.target.value })} value={form.email} required />
         <input type="password" name='password' placeholder='Digite sua senha' onChange={(e) => setForm({ ...form, password: e.target.value })} value={form.password} required />
         <input type="password" name='password confirm' placeholder='Digite sua senha novamente' onChange={(e) => setForm({ ...form, password2: e.target.value })} value={form.password2} required />
-        {form.image ? <img src={form.image} alt="preview profile picture" /> : <p>Preview da imagem aparecerá aqui</p>}
+        {form.image ? <img src={form.image} alt="preview profile" /> : <p>Preview da imagem aparecerá aqui</p>}
         <label>
           <input style={{ display: "none" }} type="file" name='image' onChange={handleImageChange} required />
           Escolha sua imagem

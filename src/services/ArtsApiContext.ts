@@ -44,16 +44,16 @@ export async function signin(userData: any): Promise<any> {
   return result.json();
 }
 
-export async function sendPost(userData: any,): Promise<any> {
+export async function sendPost(postData: any,): Promise<any> {
   const result = await fetch(`${BaseURL}/posts`, {
     method: "POST",
     headers: new Headers({
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${userData.token}`
+      "Authorization": `Bearer ${postData.token}`
     }),
-    body: JSON.stringify({title:userData.title,
-                          subtitle:userData.subtitle,
-                          image:userData.image})
+    body: JSON.stringify({title:postData.title,
+                          subtitle:postData.subtitle,
+                          image:postData.image})
   });
 
   if (result.status > 399) {
@@ -78,11 +78,11 @@ export async function getAccessToken({queryKey}: any): Promise<any> {
   return result.text();
 }
 
-export async function oldGetImages(): Promise<any> {
-  const result = await fetch(`${BaseURL}/photos`, {
+export async function getUser(token: any): Promise<any> {
+  const result = await fetch(`${BaseURL}/auth/user`, {
     method: "GET",
     headers: new Headers({
-      'Authorization': `Bearer ADASDASDasd`
+      'Authorization': `Bearer ${token}`
     })
   });
 

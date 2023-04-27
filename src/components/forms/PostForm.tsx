@@ -1,5 +1,5 @@
-import { ChangeEvent, useState, useContext } from 'react';
-import { PostBoard, Preview, Board } from './FormComponents';
+import { ChangeEvent, useState } from 'react';
+import { PostBoard, Preview } from './FormComponents';
 import { PostFormType } from '../types/types';
 import { sendPost, getAccessToken } from '../../services/ArtsApiContext';
 import { useMutation, useQuery } from 'react-query';
@@ -9,13 +9,13 @@ import { LoadingAnimation } from '../ImagesContainer/FrontPageStyledComponents';
 function PostForm(): JSX.Element {
   const OneDayInMS: number = 86400000
   const [form, setForm] = useState<PostFormType>({ title: "", subtitle: "", image: "" });
-  const token: string = localStorage.getItem('token') as string
+  const refreshToken: string = localStorage.getItem('token') as string
   const navigate = useNavigate();
-  const { data, error, isLoading: isLoading2 } = useQuery(token, getAccessToken, {
+  const { data, error, isLoading: isLoading2 } = useQuery(refreshToken, getAccessToken, {
     refetchOnReconnect: false,
     retry: false,
     staleTime: OneDayInMS,
-    onError: () => { localStorage.removeItem('token'); window.location.reload(); }
+    onError: () => { localStorage.clear(); }
   })
   const { mutate, isLoading } = useMutation(sendPost, {
     onSuccess: (data) => { alert("Post Concluído"); navigate(`/post/${data.id}`) },
@@ -61,7 +61,7 @@ function PostForm(): JSX.Element {
   if (isLoading || isLoading2) {
     return (
       <PostBoard>
-        <LoadingAnimation/>
+        <LoadingAnimation />
       </PostBoard>
     )
   }
@@ -70,7 +70,7 @@ function PostForm(): JSX.Element {
     <>
       <PostBoard>
         <Preview>
-          {form.image ? <img src={form.image} alt="" /> : <p>Preview da imagem aparecerá aqui</p>}
+          {form.image ? <img src={form.image} alt="preview post" /> : <p>Preview da imagem aparecerá aqui</p>}
         </Preview>
         <form onSubmit={handleUploadClick}>
           <h1>Criar Post</h1>

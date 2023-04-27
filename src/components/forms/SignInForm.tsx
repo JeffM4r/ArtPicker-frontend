@@ -1,22 +1,24 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import logo from "../../assets/Images/LoginScreenLogo.png";
 import { Board, Logo } from './FormComponents';
 import { SigninFormType } from '../types/types';
 import { useMutation } from 'react-query';
-import { signin } from '../../services/ArtsApiContext';
+import { signin, getUser } from '../../services/ArtsApiContext';
 import { useNavigate, Link } from 'react-router-dom';
-import userContext from '../contexts/UserContext';
-import { UserContextType } from '../types/types';
 import { LoadingAnimation } from '../ImagesContainer/FrontPageStyledComponents';
 
 function SigninForm(): JSX.Element {
-  const { setToken } = useContext(userContext) as UserContextType
   const [form, setForm] = useState<SigninFormType>({ email: "", password: "" });
+  const [accessToken, setAccessToken] = useState<string>("");
   let navigate = useNavigate();
 
   const { mutate, isLoading } = useMutation(signin, {
-    onSuccess: (data) => { alert("Login Concluido"); localStorage.setItem("token", data.refreshToken); setToken(data.refreshToken); navigate("/") },
+    onSuccess: (data) => { localStorage.setItem("token", data.refreshToken); mutateProfile(data.accessToken); setAccessToken(data.accessToken) },
     onError: () => { alert("Houve um erro nessa tentativa de login, email ou senha incorretos"); }
+  })
+
+  const { mutate: mutateProfile, isLoading: isLoading2 } = useMutation(accessToken, getUser, {
+    onSuccess: (data) => { localStorage.setItem("profile", data.profilePictures[0].pictureLink); alert("Login Concluido"); navigate("/") }
   })
 
   function handleUploadClick(event: React.FormEvent<HTMLFormElement>) {
@@ -26,7 +28,7 @@ function SigninForm(): JSX.Element {
   };
 
 
-  if (isLoading) {
+  if (isLoading || isLoading2) {
     return (
       <Board>
         <Logo src={logo} alt="logo" />

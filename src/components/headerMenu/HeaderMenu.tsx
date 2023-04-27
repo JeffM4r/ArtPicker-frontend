@@ -1,4 +1,5 @@
 import logo from "../../assets/Images/TopMenuLogo.png";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Top,
@@ -6,10 +7,18 @@ import {
   Image,
   SearchBar,
   LoginButton,
-  Line
+  Line,
+  Portrait
 } from "./HeaderStyledComponents";
 
 function HeaderMenu(): JSX.Element {
+  const profileImageLocalStorage: string = localStorage.getItem('profile') as string
+  const [profilePicture, setProfilePicture] = useState<string>("")
+
+  useEffect(() => {
+    setProfilePicture(profileImageLocalStorage)
+  }, [profileImageLocalStorage])
+
   return (
     <Top>
       <Menu>
@@ -19,9 +28,12 @@ function HeaderMenu(): JSX.Element {
         <div>
           <SearchBar placeholder="Pesquisar Post" />
         </div>
-        <Link to="/signin" >
-          <LoginButton>Login</LoginButton>
-        </Link>
+        {profilePicture ?
+          <Portrait src={profilePicture} /> :
+          <Link to="/signin" >
+            <LoginButton>Login</LoginButton>
+          </Link>
+        }
       </Menu>
       <Line />
     </Top>
