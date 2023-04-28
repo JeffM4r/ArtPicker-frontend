@@ -20,9 +20,9 @@ function Content(): JSX.Element {
   if (error) {
     return (
       <>
-        <Container>
-          Deu ruim
-        </Container>
+        <PostBoard>
+          <h2>não foi possivel carregar os posts</h2>
+        </PostBoard>
       </>
     );
   }
@@ -54,7 +54,7 @@ function Content(): JSX.Element {
   }
   return (
     <PostBoard>
-      Sem Contato com API
+      <h2>Sem contado com a API</h2>
     </PostBoard>
   );
 

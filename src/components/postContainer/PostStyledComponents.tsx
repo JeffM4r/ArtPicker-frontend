@@ -40,6 +40,12 @@ h2{
   font-weight: 500;
   font-size: 25px;
   color: #fdfdfd;
+  margin-bottom: 10px;
+}
+h3{
+  font-weight: 500;
+  font-size: 20px;
+  color: #fdfdfd;
 }
 `
 

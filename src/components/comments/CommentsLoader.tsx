@@ -1,19 +1,13 @@
-import { useParams } from "react-router-dom";
-import { Portrait } from "../headerMenu/HeaderStyledComponents";
 import { useQuery } from "react-query";
 import { getPost } from "../../services/ArtsApiContext";
 import { PostBoard } from "../forms/FormComponents";
 import { LoadingAnimation } from "../ImagesContainer/FrontPageStyledComponents";
-import PostComments from "../comments/CommentsLoader";
-import {
-  ImageContainer,
-  ArtInfo,
-  Comments,
-  CommentForm
-} from "./PostStyledComponents";
+import { Comments, CommentForm } from "../postContainer/PostStyledComponents";
+import { Portrait } from "../headerMenu/HeaderStyledComponents";
 
-function PostContainer(): JSX.Element {
-  const { id } = useParams<{ id: string }>();
+
+function PostComments({ id }: any): JSX.Element {
+  console.log(id)
   const OneDayInMS = 86400000
   const { data, isLoading, error } = useQuery([id], getPost, {
     refetchOnReconnect: false,
@@ -25,7 +19,7 @@ function PostContainer(): JSX.Element {
     return (
       <>
         <PostBoard>
-          <h2>não foi possivel carregar os posts</h2>
+          <h2>não foi possivel carregar o post</h2>
         </PostBoard>
       </>
     );
@@ -33,19 +27,27 @@ function PostContainer(): JSX.Element {
   if (data) {
     return (
       <>
-        <ImageContainer >
-          <img src={data.pictureLink} alt="" />
-        </ImageContainer >
-        <ArtInfo>
-          <h1>Titulo: {data.title}</h1>
-          <h2>Descrição: {data.subtitle}</h2>
-          <h3>feito por: {data.users.userName}</h3>
-        </ArtInfo>
-        <PostComments id={data.id}/>
-        <CommentForm>
-          <input placeholder="Escreva um comentário" type="text" required />
-          <button>Enviar</button>
-        </CommentForm>
+        <Comments>
+          <div>
+            <Portrait src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Pyke_0.jpg" alt="" />
+            <p>JefdasTretaasdaasdasdasdasdasdass</p>
+          </div>
+          <p>comentario legal orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+        </Comments>
+        <Comments>
+          <div>
+            <Portrait src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Pyke_0.jpg" alt="" />
+            <p>JefdasTretaasdaas asdas</p>
+          </div>
+          <p>remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+        </Comments>
+        <Comments>
+          <div>
+            <Portrait src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Pyke_0.jpg" alt="" />
+            <p>JefdasTretaasdaas asdas</p>
+          </div>
+          <p>Muito legal</p>
+        </Comments>
       </>
     );
   }
@@ -90,4 +92,4 @@ function PostContainer(): JSX.Element {
   );
 }
 
-export default PostContainer;
+export default PostComments;

@@ -92,3 +92,15 @@ export async function getUser(token: any): Promise<any> {
 
   return result.json();
 }
+
+export async function getPost({queryKey}: any): Promise<any> {
+  const result = await fetch(`${BaseURL}/posts/${queryKey[0]}`, {
+    method: "GET",
+  });
+
+  if (result.status > 399) {
+    throw new Error(`error ${result.status}`);
+  };
+
+  return result.json();
+}

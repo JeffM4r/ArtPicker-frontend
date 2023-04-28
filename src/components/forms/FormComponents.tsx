@@ -15,7 +15,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
- form{
+form{
   margin-top: 30px;
   display: flex;
   flex-direction: column;
@@ -45,8 +45,10 @@ flex-direction: column;
     text-align: center;
     background-color: #fdfdfd;
     border-radius: 5px;
+    transition: all .5s ease-in-out;
     :hover{
       cursor: pointer;
+      background-color: gray;
     }
   }
   button{
@@ -58,8 +60,10 @@ flex-direction: column;
     font-size: 30px;
     background-color: #fdfdfd;
     border-radius: 15px;
+    transition: all .5s ease-in-out;
     :hover{
       cursor: pointer;
+      background-color: gray;
     }
   }
   p{
@@ -73,11 +77,11 @@ flex-direction: column;
     border-radius: 50px;
     object-fit: cover;
   }
- }
- a{
+}
+a{
   margin-top: 8px;
   color: white;
- }
+}
 `
 export const PostBoard: StyledComponent<"div", any, {}, never> = styled.div`
 margin-top: 10px;
@@ -96,7 +100,11 @@ justify-content: center;
 align-items: center;
 margin-left: 10px;
 margin-right: 10px;
- form{
+h2{
+  font-size: 30px;
+  color: #fdfdfd;
+}
+form{
   margin-top: 30px;
   display: flex;
   flex-direction: column;
@@ -128,8 +136,10 @@ margin-right: 10px;
     text-align: center;
     background-color: #fdfdfd;
     border-radius: 5px;
+    transition: all .5s ease-in-out;
     :hover{
       cursor: pointer;
+      background-color: gray;
     }
   }
   button{
@@ -141,15 +151,17 @@ margin-right: 10px;
     font-size: 30px;
     background-color: #fdfdfd;
     border-radius: 15px;
+    transition: all .5s ease-in-out;
     :hover{
       cursor: pointer;
+      background-color: gray;
     }
   }
- }
- a{
+}
+a{
   margin-top: 8px;
   color: white;
- }
+}
 `
 
 export const Preview: StyledComponent<"div", any, {}, never> = styled.div`

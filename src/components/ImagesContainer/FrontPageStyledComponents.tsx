@@ -42,4 +42,7 @@ width: 100%;
 transition: all 350ms ease;
 cursor: pointer;
 margin-bottom: 12px;
+:hover{
+  transform: scale(0.9);
+}
 `

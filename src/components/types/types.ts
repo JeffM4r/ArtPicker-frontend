@@ -23,3 +23,7 @@ export interface PostFormType {
   subtitle: string,
   image: string
 }
+
+export interface hiddenMenuProps {
+  menuHidden: boolean;
+}
