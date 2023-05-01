@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Portrait } from "../headerMenu/HeaderStyledComponents";
-import { useQuery } from "react-query";
+import { useQuery,useMutation } from "react-query";
 import { getPost } from "../../services/ArtsApiContext";
 import { PostBoard } from "../forms/FormComponents";
 import { LoadingAnimation } from "../ImagesContainer/FrontPageStyledComponents";
@@ -11,15 +11,27 @@ import {
   Comments,
   CommentForm
 } from "./PostStyledComponents";
+import { useState, useEffect } from "react";
 
 function PostContainer(): JSX.Element {
   const { id } = useParams<{ id: string }>();
+  const tokenLocalStorage: string = localStorage.getItem('token') as string
+  const [token, setToken] = useState<string>()
   const OneDayInMS = 86400000
   const { data, isLoading, error } = useQuery([id], getPost, {
     refetchOnReconnect: false,
     retry: false,
     staleTime: OneDayInMS
   })
+
+  const { mutate, isLoading:isLoading2 } = useMutation(async()=>{}, {
+    onSuccess: (data) => { alert("Mensagem enviada") },
+    onError: () => { alert("Ocorreu um erro, tente novamente"); }
+  })
+
+  useEffect(() => {
+    setToken(tokenLocalStorage);
+  }, [tokenLocalStorage])
 
   if (error) {
     return (
@@ -41,11 +53,18 @@ function PostContainer(): JSX.Element {
           <h2>Descrição: {data.subtitle}</h2>
           <h3>feito por: {data.users.userName}</h3>
         </ArtInfo>
-        <PostComments id={data.id}/>
-        <CommentForm>
-          <input placeholder="Escreva um comentário" type="text" required />
-          <button>Enviar</button>
-        </CommentForm>
+        <PostComments id={data.id} />
+        {token ?
+          <CommentForm>
+            <input placeholder="Escreva um comentário" type="text" required />
+            <button>Enviar</button>
+          </CommentForm>
+          :
+          <CommentForm>
+            <p>faça login para poder comentar</p>
+          </CommentForm>
+        }
+
       </>
     );
   }
