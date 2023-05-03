@@ -79,6 +79,23 @@ div{
 }
 `
 
+export const InformBoxForm: StyledComponent<"div", any, {}, never> = styled.div`
+height: 95px;
+width: 60vw;
+background-color: #0c0c0c;
+padding: 20px;
+min-width: 800px;
+margin-bottom: 30px;
+border-radius: 15px;
+display: flex;
+justify-content: center;
+align-items: center;
+p{
+  color: white;
+  font-size: 30px;
+}
+`
+
 export const CommentForm: StyledComponent<"form", any, {}, never> = styled.form`
 height: 95px;
 width: 60vw;
@@ -96,6 +113,9 @@ button{
   border-radius: 15px;
   background-color: #fdfdfd;
   font-size: 20px;
+  :hover{
+    cursor: pointer;
+  }
 }
 input{
   width: 100%;

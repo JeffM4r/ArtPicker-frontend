@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { Portrait } from "../headerMenu/HeaderStyledComponents";
-import { useQuery,useMutation } from "react-query";
-import { getPost } from "../../services/ArtsApiContext";
+import { useQuery, useMutation } from "react-query";
+import { getPost, sendComments, getAccessToken } from "../../services/ArtsApiContext";
 import { PostBoard } from "../forms/FormComponents";
 import { LoadingAnimation } from "../ImagesContainer/FrontPageStyledComponents";
 import PostComments from "../comments/CommentsLoader";
@@ -9,29 +9,43 @@ import {
   ImageContainer,
   ArtInfo,
   Comments,
-  CommentForm
+  CommentForm,
+  InformBoxForm
 } from "./PostStyledComponents";
 import { useState, useEffect } from "react";
 
 function PostContainer(): JSX.Element {
   const { id } = useParams<{ id: string }>();
   const tokenLocalStorage: string = localStorage.getItem('token') as string
-  const [token, setToken] = useState<string>()
+  const [token, setToken] = useState<string>("")
+  const [comment, setComment] = useState<{ comment: string }>({ comment: "" })
   const OneDayInMS = 86400000
   const { data, isLoading, error } = useQuery([id], getPost, {
     refetchOnReconnect: false,
     retry: false,
     staleTime: OneDayInMS
   })
+  const { data: accessToken } = useQuery(tokenLocalStorage, getAccessToken, {
+    refetchOnReconnect: false,
+    retry: false,
+    staleTime: OneDayInMS,
+    onError: () => { localStorage.clear(); }
+  })
 
-  const { mutate, isLoading:isLoading2 } = useMutation(async()=>{}, {
-    onSuccess: (data) => { alert("Mensagem enviada") },
-    onError: () => { alert("Ocorreu um erro, tente novamente"); }
+  const { mutate, isLoading: isLoading2 } = useMutation(sendComments, {
+    onSuccess: (data) => { alert("Mensagem enviada"); window.location.reload(); },
+    onError: () => { alert("Mensagem vazia, escreva algo"); }
   })
 
   useEffect(() => {
     setToken(tokenLocalStorage);
   }, [tokenLocalStorage])
+
+  function handleUploadClick(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (isLoading2) { return };
+    mutate({ ...comment, token: accessToken, id: id });
+  };
 
   if (error) {
     return (
@@ -55,14 +69,14 @@ function PostContainer(): JSX.Element {
         </ArtInfo>
         <PostComments id={data.id} />
         {token ?
-          <CommentForm>
-            <input placeholder="Escreva um comentário" type="text" required />
+          <CommentForm onSubmit={handleUploadClick}>
+            <input placeholder="Escreva um comentário" type="text" required onChange={(e) => setComment({ ...comment, comment: e.target.value })} value={comment.comment} />
             <button>Enviar</button>
           </CommentForm>
           :
-          <CommentForm>
-            <p>faça login para poder comentar</p>
-          </CommentForm>
+          <InformBoxForm>
+            <p>Faça login para poder comentar</p>
+          </InformBoxForm>
         }
 
       </>

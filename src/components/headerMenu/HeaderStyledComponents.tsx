@@ -28,6 +28,7 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: center;
+z-index: 1;
 `
 export const ListMenu: StyledComponent<"ol", any, hiddenMenuProps, never> = styled.ol<hiddenMenuProps>`
 position: absolute; 

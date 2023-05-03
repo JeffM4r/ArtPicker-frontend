@@ -104,3 +104,33 @@ export async function getPost({queryKey}: any): Promise<any> {
 
   return result.json();
 }
+
+export async function getComments({queryKey}: any): Promise<any> {
+  const result = await fetch(`${BaseURL}/comments/${queryKey[0]}`, {
+    method: "GET",
+  });
+
+  if (result.status > 399) {
+    throw new Error(`error ${result.status}`);
+  };
+
+  return result.json();
+}
+
+export async function sendComments(commentData: any): Promise<any> {
+  console.log(commentData)
+  const result = await fetch(`${BaseURL}/comments/${commentData.id}`, {
+    method: "POST",
+    headers: new Headers({
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${commentData.token}`
+    }),
+    body: JSON.stringify({comment:commentData.comment})
+  });
+
+  if (result.status > 399) {
+    throw new Error(`error ${result.status}`);
+  };
+
+  return result.json();
+}
