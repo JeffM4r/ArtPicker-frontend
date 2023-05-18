@@ -3,25 +3,25 @@ import logo from "../../assets/Images/LoginScreenLogo.png";
 import { Board, Logo } from './FormComponents';
 import { useMutation } from 'react-query';
 import { createAccount } from '../../services/ArtsApiContext';
-import { SignupFormType } from '../types/types';
+import { SignupFormType, SignupFormTypetoSend } from '../types/types';
 import { Link } from 'react-router-dom';
 import { LoadingAnimation } from '../ImagesContainer/FrontPageStyledComponents';
 
 function SignupForm(): JSX.Element {
   const [form, setForm] = useState<SignupFormType>({ userName: "", email: "", password: "", password2: "", image: "" });
-  const { mutate, isLoading } = useMutation(createAccount, {
+  const { mutate, isLoading } = useMutation<null, unknown, SignupFormTypetoSend>(createAccount, {
     onSuccess: () => { alert("Conta criada com sucesso! vá para página de login"); },
     onError: () => { alert("Houve um erro nessa tentativa de cadastro, email ou nome de usuário pode estar em uso"); }
   })
 
-  function handleImageChange(event: ChangeEvent<HTMLInputElement>) {
+  function handleImageChange(event: ChangeEvent<HTMLInputElement>): void {
     const image: FileList | null = event.target.files;
     if (image) {
       transformFile(image[0])
     }
   };
 
-  function transformFile(file: File | null) {
+  function transformFile(file: File | null): void {
     const reader = new FileReader()
 
     if (file) {
@@ -36,7 +36,7 @@ function SignupForm(): JSX.Element {
     }
   }
 
-  function handleUploadClick(event: React.FormEvent<HTMLFormElement>) {
+  function handleUploadClick(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     if (form.password !== form.password2) { alert("passwords digitados estão diferentes"); return };
     if (isLoading) { return };

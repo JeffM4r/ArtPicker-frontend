@@ -4,11 +4,12 @@ import { PostBoard } from "../forms/FormComponents";
 import { LoadingAnimation } from "../ImagesContainer/FrontPageStyledComponents";
 import { Comments } from "../postContainer/PostStyledComponents";
 import { Portrait } from "../headerMenu/HeaderStyledComponents";
+import { comments } from "../types/types";
 
 
-function PostComments({ id }: any): JSX.Element {
-  const OneDayInMS = 86400000
-  const { data, isLoading, error } = useQuery([id], getComments, {
+function PostComments({ id }: { id: string }): JSX.Element {
+  const OneDayInMS: number = 86400000
+  const { data, isLoading, error } = useQuery<comments[]>([id], getComments, {
     refetchOnReconnect: true,
     retry: false,
     staleTime: OneDayInMS

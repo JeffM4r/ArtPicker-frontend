@@ -5,7 +5,6 @@ import {
   Top,
   Menu,
   Image,
-  SearchBar,
   LoginButton,
   Line,
   Portrait,
@@ -21,12 +20,11 @@ function HeaderMenu(): JSX.Element {
     setProfilePicture(profileImageLocalStorage)
   }, [profileImageLocalStorage])
 
-  function changeMenuState() {
+  function changeMenuState(): void {
     setMenuHidden(!menuHidden);
-    console.log(menuHidden)
   }
 
-  function logOut() {
+  function logOut(): void {
     localStorage.clear();
     window.location.reload();
   }
@@ -37,9 +35,6 @@ function HeaderMenu(): JSX.Element {
         <Link to="/" >
           <Image src={logo} alt="ArtPicker" />
         </Link>
-        <div>
-          <SearchBar placeholder="Pesquisar Post" />
-        </div>
         {profilePicture ?
           <Portrait src={profilePicture} onClick={changeMenuState} /> :
           <Link to="/signin" >

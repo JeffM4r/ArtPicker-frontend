@@ -1,3 +1,6 @@
+import { comments } from "../components/types/types";
+import { QueryFunctionContext } from "react-query";
+
 const BaseURL: string | undefined = process.env.REACT_APP_BASE_URL
 
 export async function getImages(): Promise<any> {
@@ -51,9 +54,11 @@ export async function sendPost(postData: any,): Promise<any> {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${postData.token}`
     }),
-    body: JSON.stringify({title:postData.title,
-                          subtitle:postData.subtitle,
-                          image:postData.image})
+    body: JSON.stringify({
+      title: postData.title,
+      subtitle: postData.subtitle,
+      image: postData.image
+    })
   });
 
   if (result.status > 399) {
@@ -63,7 +68,7 @@ export async function sendPost(postData: any,): Promise<any> {
   return result.json();
 }
 
-export async function getAccessToken({queryKey}: any): Promise<any> {
+export async function getAccessToken({ queryKey }: QueryFunctionContext): Promise<string> {
   const result = await fetch(`${BaseURL}/auth/token`, {
     method: "POST",
     headers: new Headers({
@@ -93,7 +98,7 @@ export async function getUser(token: any): Promise<any> {
   return result.json();
 }
 
-export async function getPost({queryKey}: any): Promise<any> {
+export async function getPost({ queryKey }: QueryFunctionContext): Promise<any> {
   const result = await fetch(`${BaseURL}/posts/${queryKey[0]}`, {
     method: "GET",
   });
@@ -105,7 +110,7 @@ export async function getPost({queryKey}: any): Promise<any> {
   return result.json();
 }
 
-export async function getComments({queryKey}: any): Promise<any> {
+export async function getComments({ queryKey }: QueryFunctionContext): Promise<comments[]> {
   const result = await fetch(`${BaseURL}/comments/${queryKey[0]}`, {
     method: "GET",
   });
@@ -125,7 +130,7 @@ export async function sendComments(commentData: any): Promise<any> {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${commentData.token}`
     }),
-    body: JSON.stringify({comment:commentData.comment})
+    body: JSON.stringify({ comment: commentData.comment })
   });
 
   if (result.status > 399) {

@@ -81,13 +81,3 @@ transition: all .5s ease-in-out;
 }
 
 `
-export const SearchBar: StyledComponent<"input", any, {}, never> = styled.input`
-height: 25px;
-margin-right: 50px;
-width: 160px;
-border-radius: 5px;
-font-size: 18px;
-::placeholder {
-  text-align: center;
-}
-`

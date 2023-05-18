@@ -1,35 +1,36 @@
 import { ChangeEvent, useState } from 'react';
 import { PostBoard, Preview } from './FormComponents';
-import { PostFormType } from '../types/types';
+import { PostFormType, PostFormTypeWithToken, postFromApi } from '../types/types';
 import { sendPost, getAccessToken } from '../../services/ArtsApiContext';
 import { useMutation, useQuery } from 'react-query';
 import { useNavigate, Link } from 'react-router-dom';
 import { LoadingAnimation } from '../ImagesContainer/FrontPageStyledComponents';
+import { NavigateFunction } from 'react-router-dom';
 
 function PostForm(): JSX.Element {
   const OneDayInMS: number = 86400000
   const [form, setForm] = useState<PostFormType>({ title: "", subtitle: "", image: "" });
   const refreshToken: string = localStorage.getItem('token') as string
-  const navigate = useNavigate();
-  const { data, error, isLoading: isLoading2 } = useQuery(refreshToken, getAccessToken, {
+  const navigate: NavigateFunction = useNavigate();
+  const { data, error, isLoading: isLoading2 } = useQuery<string>(refreshToken, getAccessToken, {
     refetchOnReconnect: false,
     retry: false,
     staleTime: OneDayInMS,
     onError: () => { localStorage.clear(); }
   })
-  const { mutate, isLoading } = useMutation(sendPost, {
+  const { mutate, isLoading } = useMutation<postFromApi, unknown, PostFormTypeWithToken>(sendPost, {
     onSuccess: (data) => { alert("Post Concluído"); navigate(`/post/${data.id}`) },
     onError: () => { alert("Ocorreu um erro, tente novamente"); }
   })
 
-  function handleImageChange(event: ChangeEvent<HTMLInputElement>) {
+  function handleImageChange(event: ChangeEvent<HTMLInputElement>): void {
     const image: FileList | null = event.target.files;
     if (image) {
       transformFile(image[0])
     }
   };
 
-  function transformFile(file: File | null) {
+  function transformFile(file: File | null): void {
     const reader: FileReader = new FileReader()
 
     if (file) {
@@ -44,7 +45,7 @@ function PostForm(): JSX.Element {
     }
   }
 
-  function handleUploadClick(event: React.FormEvent<HTMLFormElement>) {
+  function handleUploadClick(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     if (isLoading) { return };
     mutate({ ...form, token: data });

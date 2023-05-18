@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import { getImages } from "../../services/ArtsApiContext";
 import { PostBoard } from "../forms/FormComponents";
 import { Link } from "react-router-dom";
+import { initialPagePosts } from "../types/types";
 import {
   Container,
   ImageContainer,
@@ -10,8 +11,8 @@ import {
 
 
 function Content(): JSX.Element {
-  const OneDayInMS = 86400000
-  const { data, isLoading, error } = useQuery("artsUploaded", getImages, {
+  const OneDayInMS: number = 86400000
+  const { data, isLoading, error } = useQuery<initialPagePosts[]>("artsUploaded", getImages, {
     refetchOnReconnect: false,
     retry: false,
     staleTime: OneDayInMS

@@ -21,11 +21,11 @@ function PostContainer(): JSX.Element {
   const [comment, setComment] = useState<{ comment: string }>({ comment: "" })
   const OneDayInMS = 86400000
   const { data, isLoading, error } = useQuery([id], getPost, {
-    refetchOnReconnect: false,
+    refetchOnReconnect: true,
     retry: false,
     staleTime: OneDayInMS
   })
-  const { data: accessToken } = useQuery(tokenLocalStorage, getAccessToken, {
+  const { data: accessToken } = useQuery<string>(tokenLocalStorage, getAccessToken, {
     refetchOnReconnect: false,
     retry: false,
     staleTime: OneDayInMS,
