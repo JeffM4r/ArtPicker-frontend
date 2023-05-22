@@ -11,12 +11,7 @@ import {
 
 
 function Content(): JSX.Element {
-  const OneDayInMS: number = 86400000
-  const { data, isLoading, error } = useQuery<initialPagePosts[]>("artsUploaded", getImages, {
-    refetchOnReconnect: false,
-    retry: false,
-    staleTime: OneDayInMS
-  })
+  const { data, isLoading, error } = useQuery<initialPagePosts[]>("artsUploaded", getImages)
 
   if (error) {
     return (

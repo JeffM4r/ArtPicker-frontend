@@ -1,9 +1,19 @@
-import { comments } from "../components/types/types";
 import { QueryFunctionContext } from "react-query";
+import {
+  comments,
+  initialPagePosts,
+  SignupFormTypetoSend,
+  SigninFormType,
+  LoginResponse,
+  PostFormTypeWithToken,
+  postFromApi, profile,
+  postResponseType,
+  commentToSend
+} from "../components/types/types";
 
 const BaseURL: string | undefined = process.env.REACT_APP_BASE_URL
 
-export async function getImages(): Promise<any> {
+export async function getImages(): Promise<initialPagePosts[]> {
   const result = await fetch(`${BaseURL}/posts`, {
     method: "GET",
   });
@@ -15,7 +25,7 @@ export async function getImages(): Promise<any> {
   return result.json();
 }
 
-export async function createAccount(userData: any): Promise<any> {
+export async function createAccount(userData: SignupFormTypetoSend): Promise<null> {
   const result = await fetch(`${BaseURL}/auth/signup`, {
     method: "POST",
     headers: new Headers({
@@ -31,7 +41,7 @@ export async function createAccount(userData: any): Promise<any> {
   return result.json();
 }
 
-export async function signin(userData: any): Promise<any> {
+export async function signin(userData: SigninFormType): Promise<LoginResponse> {
   const result = await fetch(`${BaseURL}/auth/signin`, {
     method: "POST",
     headers: new Headers({
@@ -47,7 +57,7 @@ export async function signin(userData: any): Promise<any> {
   return result.json();
 }
 
-export async function sendPost(postData: any,): Promise<any> {
+export async function sendPost(postData: PostFormTypeWithToken): Promise<postFromApi> {
   const result = await fetch(`${BaseURL}/posts`, {
     method: "POST",
     headers: new Headers({
@@ -83,7 +93,7 @@ export async function getAccessToken({ queryKey }: QueryFunctionContext): Promis
   return result.text();
 }
 
-export async function getUser(token: any): Promise<any> {
+export async function getUser(token: string): Promise<profile> {
   const result = await fetch(`${BaseURL}/auth/user`, {
     method: "GET",
     headers: new Headers({
@@ -98,7 +108,7 @@ export async function getUser(token: any): Promise<any> {
   return result.json();
 }
 
-export async function getPost({ queryKey }: QueryFunctionContext): Promise<any> {
+export async function getPost({ queryKey }: QueryFunctionContext): Promise<postResponseType> {
   const result = await fetch(`${BaseURL}/posts/${queryKey[0]}`, {
     method: "GET",
   });
@@ -122,7 +132,7 @@ export async function getComments({ queryKey }: QueryFunctionContext): Promise<c
   return result.json();
 }
 
-export async function sendComments(commentData: any): Promise<any> {
+export async function sendComments(commentData: commentToSend): Promise<{ comment: string }> {
   console.log(commentData)
   const result = await fetch(`${BaseURL}/comments/${commentData.id}`, {
     method: "POST",

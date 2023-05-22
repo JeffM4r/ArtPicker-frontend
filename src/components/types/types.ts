@@ -30,9 +30,9 @@ export interface hiddenMenuProps {
 
 export interface profilePicture {
   createdAt?: string,
-  id: string,
+  id?: string,
   pictureLink: string,
-  userId: number
+  userId?: number
 }
 
 export interface comments {
@@ -83,4 +83,26 @@ export interface initialPagePosts {
   subtitle: string,
   title: string,
   userId: number
+}
+
+export interface postResponseType {
+  createdAt: string,
+  id: number,
+  pictureLink: string,
+  pictureSerial: string,
+  subtitle: string,
+  title: string,
+  users: {
+    createdAt: string,
+    email: string,
+    id: number,
+    profilePictures: profilePicture[],
+    userName: string
+  }
+}
+
+export interface commentToSend {
+  comment:string,
+  token:string | undefined,
+  id:string | undefined
 }

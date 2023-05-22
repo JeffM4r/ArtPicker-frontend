@@ -7,7 +7,7 @@ import { Portrait } from "../headerMenu/HeaderStyledComponents";
 import { comments } from "../types/types";
 
 
-function PostComments({ id }: { id: string }): JSX.Element {
+function PostComments({ id }: { id: number }): JSX.Element {
   const OneDayInMS: number = 86400000
   const { data, isLoading, error } = useQuery<comments[]>([id], getComments, {
     refetchOnReconnect: true,

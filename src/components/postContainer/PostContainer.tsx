@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { Portrait } from "../headerMenu/HeaderStyledComponents";
 import { useQuery, useMutation } from "react-query";
 import { getPost, sendComments, getAccessToken } from "../../services/ArtsApiContext";
 import { PostBoard } from "../forms/FormComponents";
@@ -8,19 +7,19 @@ import PostComments from "../comments/CommentsLoader";
 import {
   ImageContainer,
   ArtInfo,
-  Comments,
   CommentForm,
   InformBoxForm
 } from "./PostStyledComponents";
 import { useState, useEffect } from "react";
+import { postResponseType, commentToSend } from "../types/types";
 
 function PostContainer(): JSX.Element {
   const { id } = useParams<{ id: string }>();
   const tokenLocalStorage: string = localStorage.getItem('token') as string
   const [token, setToken] = useState<string>("")
   const [comment, setComment] = useState<{ comment: string }>({ comment: "" })
-  const OneDayInMS = 86400000
-  const { data, isLoading, error } = useQuery([id], getPost, {
+  const OneDayInMS: number = 86400000
+  const { data, isLoading, error } = useQuery<postResponseType>([id], getPost, {
     refetchOnReconnect: true,
     retry: false,
     staleTime: OneDayInMS
@@ -32,8 +31,8 @@ function PostContainer(): JSX.Element {
     onError: () => { localStorage.clear(); }
   })
 
-  const { mutate, isLoading: isLoading2 } = useMutation(sendComments, {
-    onSuccess: (data) => { alert("Mensagem enviada"); window.location.reload(); },
+  const { mutate, isLoading: isLoading2 } = useMutation<{ comment: string }, unknown, commentToSend>(sendComments, {
+    onSuccess: () => { alert("Mensagem enviada"); window.location.reload(); },
     onError: () => { alert("Mensagem vazia, escreva algo"); }
   })
 
@@ -41,7 +40,7 @@ function PostContainer(): JSX.Element {
     setToken(tokenLocalStorage);
   }, [tokenLocalStorage])
 
-  function handleUploadClick(event: React.FormEvent<HTMLFormElement>) {
+  function handleUploadClick(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     if (isLoading2) { return };
     mutate({ ...comment, token: accessToken, id: id });
@@ -94,31 +93,9 @@ function PostContainer(): JSX.Element {
 
   return (
     <>
-      <Comments>
-        <div>
-          <Portrait src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Pyke_0.jpg" alt="" />
-          <p>JefdasTretaasdaasdasdasdasdasdass</p>
-        </div>
-        <p>comentario legal orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
-      </Comments>
-      <Comments>
-        <div>
-          <Portrait src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Pyke_0.jpg" alt="" />
-          <p>JefdasTretaasdaas asdas</p>
-        </div>
-        <p>remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
-      </Comments>
-      <Comments>
-        <div>
-          <Portrait src="https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Pyke_0.jpg" alt="" />
-          <p>JefdasTretaasdaas asdas</p>
-        </div>
-        <p>Muito legal</p>
-      </Comments>
-      <CommentForm>
-        <input placeholder="Escreva um comentário" type="text" required />
-        <button>Enviar</button>
-      </CommentForm>
+      <PostBoard>
+        <h2>não foi possivel carregar os posts</h2>
+      </PostBoard>
     </>
   );
 }
