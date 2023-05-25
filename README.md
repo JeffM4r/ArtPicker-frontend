@@ -10,7 +10,7 @@
  
  ```
 # Clone this repository
-$ git clone https://github.com/Rodolpho-Oliveira/projeto-mars-front.git
+$ git clone https://github.com/JeffM4r/ArtPicker-frontend.git
 
 # Go into the repository
 $ cd projeto-rover-front
