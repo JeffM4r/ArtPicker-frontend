@@ -17,6 +17,9 @@ $ cd projeto-rover-front
 # Install dependencies
 $ npm install
 
+# Create .env file
+setup "baseurl" with the backend project running, use .env.example as a guide
+
  ```
  
  ## USAGE
