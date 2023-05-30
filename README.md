@@ -12,7 +12,7 @@
 $ git clone https://github.com/JeffM4r/ArtPicker-frontend.git
 
 # Go into the repository
-$ cd projeto-rover-front
+$ cd ArtPicker-frontend/
 
 # Install dependencies
 $ npm install
